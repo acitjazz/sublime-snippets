@@ -1,0 +1,51 @@
+<snippet>
+	<content><![CDATA[
+namespace App;
+
+use Carbon\Carbon;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+
+class ${1:Model} extends Model implements HasMedia, HasMediaConversions
+{
+  use Sluggable;
+  use SluggableScopeHelpers;
+  use HasMediaTrait;
+  protected $fillable = ['title','slug'];
+  //slug
+  public function sluggable(){
+      return [
+          'slug' => [
+              'source' => 'title'
+          ]
+      ];
+  }
+
+  public function registerMediaConversions()
+    {
+        \$this->addMediaConversion('small')
+            ->setManipulations(['w' => 150, 'h' => 150, 'fit' => 'crop', 'fm' => 'png'])
+            ->performOnCollections('thumbnail');
+        \$this->addMediaConversion('medium')
+             ->setManipulations(['w' => 800, 'h' => 600, 'fit' => 'crop', 'fm' => 'png'])
+            ->performOnCollections('thumbnail');
+    }
+  public function ${2:relations}()
+  {
+    return \$this->belongsToMany('App\${3:Relation}')->withTimestamps();
+  }
+  public function get${4:Relation}ListAttribute()
+  {
+    return \$this->${5:relation}->pluck('id')->all();
+  }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>model</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>

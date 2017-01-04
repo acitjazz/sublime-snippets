@@ -1,0 +1,38 @@
+<snippet>
+	<content><![CDATA[
+//Auth::routes();
+Route::group(['middleware' => 'web'], function () {
+  //BCAKEND LOGIN
+    Route::get('/backend/login', 'Auth\LoginController@showLoginForm');
+    Route::post('/login', 'Auth\LoginController@login');
+    Route::post('/logout', 'Auth\LoginController@logout');
+  //FRONT END
+    Route::get('/', 'HomeController@index');
+});
+
+Route::group(['prefix' => 'backend','middleware' => ['web','can:all']], function() {
+  //BACK END
+  Route::get('/dashboard', 'DashboardController@index');
+  Route::get('/', 'DashboardController@index');
+ 
+  //USER & PERMISSION
+  Route::resource('user', 'UserController');
+  Route::resource('permission', 'PermissionController');
+  Route::resource('role', 'RoleController');
+  Route::post('role/give-permission', 'RoleController@givepermission');
+  Route::post('role/user-permission', 'RoleController@usergivepermission');
+  Route::post('role/user-role', 'RoleController@usergiverole');
+
+  //MODULE
+  Route::resource('page', 'PageController');
+
+  //MEDIA
+  Route::post('/store-media-page/{id}', 'PageController@storemedia');
+  Route::post('/destroy-media', 'MediaController@destroy');
+});.
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>routes</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>

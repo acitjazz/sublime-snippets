@@ -1,0 +1,55 @@
+<snippet>
+	<content><![CDATA[
+public function __construct()
+{
+	\$this->middleware('auth');
+}
+/**
+ * Display a listing of Data.
+ **/
+public function index()
+{
+	\$name = Name::latest('created_at')->paginate(20);
+	return view('app.',compact('name'));
+}
+/**
+ * Create Data.
+ **/
+public function create()
+{
+	return view('app.');
+}
+/**
+ * Store Data.
+ **/
+public function store(NameRequest \$request)
+{
+	return redirect()->back();
+}
+/**
+ * Edit Data.
+ **/
+public function edit(Name \$name)
+{
+	return redirect()->back();
+}
+/**
+ * Update Data.
+ **/
+public function update(NameRequest \$request, Name \$name)
+{
+	return redirect()->back();
+}
+/**
+ * Delete Data.
+ **/
+public function destroy(\$request)
+{
+	return redirect()->back();
+}
+]]></content> 
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>crud</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>
